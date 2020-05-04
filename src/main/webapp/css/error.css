@@ -1,0 +1,24 @@
+
+.error {
+    color: #a94442;
+    background-color: #f2dede;
+    margin-bottom: 20px;
+    border: 1px solid #ebccd1;
+    padding: 15px 15px 15px 25px;
+}
+.error::before, .error::after {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 3px;
+}
+.error::before {
+    left: 20px;
+    transform: rotate(-45deg);
+    background-color: #a94442;
+}
+.error::after {
+    left: 20px;
+    transform: rotate(45deg);
+    background-color: #a94442;
+}
