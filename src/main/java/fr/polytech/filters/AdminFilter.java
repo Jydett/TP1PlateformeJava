@@ -1,5 +1,7 @@
 package fr.polytech.filters;
 
+import fr.polytech.beans.User;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebFilter;
@@ -8,17 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//todo c'est cassé tous les filtres :,(
 
 @WebFilter(filterName = "connectedAdminFilter")
 public class AdminFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        if (req.getSession().getAttribute("connectedAdmin") == null || !((Boolean) req.getSession().getAttribute("connectedAdmin"))) {
-            res.sendRedirect("connected.jsp");
-        }
-        else {
+        Object connected = req.getSession().getAttribute("connected");
+        if (connected != null && connected instanceof User && ((User) connected).isAdmin()) {
             chain.doFilter(req, res);
+        } else {
+            res.sendRedirect("connected.jsp");
         }
     }
 }

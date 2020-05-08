@@ -22,3 +22,17 @@
     transform: rotate(45deg);
     background-color: #a94442;
 }
+
+.message {
+    background-color: #92f2a9;
+    color: #4ba974 !important;
+    border: 1px solid #a8ebcb;
+}
+
+.message::before {
+    background-color: #6ba913 !important;
+}
+
+.message::after {
+    background-color: #6ba913 !important;
+}

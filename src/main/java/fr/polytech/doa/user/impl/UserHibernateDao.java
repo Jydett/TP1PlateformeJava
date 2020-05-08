@@ -5,6 +5,7 @@ import fr.polytech.doa.HibernateDao;
 import fr.polytech.doa.user.UserDao;
 import org.hibernate.Session;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class UserHibernateDao extends HibernateDao<User> implements UserDao {
 
     @Override
     public Optional<User> findUserByLogin(String login) {
-        return hibernateSession.createQuery("SELECT u FROM User u WHERE u.userName = :login", super.clazz)
+        return hibernateSession.createQuery("SELECT u FROM User u WHERE u.login = :login", super.clazz)
                 .setParameter("login", login)
                 .getResultList()
                 .stream()
@@ -29,5 +30,10 @@ public class UserHibernateDao extends HibernateDao<User> implements UserDao {
     public List<User> findNonAdmin() {
         return hibernateSession.createQuery("SELECT u FROM User u WHERE u.isAdmin = false", super.clazz)
                 .getResultList();
+    }
+
+    @Override
+    public Optional<User> findOneByID(Long id) throws SQLException {
+        return Optional.empty();
     }
 }

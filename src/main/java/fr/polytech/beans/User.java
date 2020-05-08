@@ -1,22 +1,40 @@
 package fr.polytech.beans;
 
+import fr.polytech.doa.Identifiable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class User implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userName;
+    private String login;
     private String password;
+    private boolean isAdmin;
+
 
     public User() {
     }
 
-    private boolean isAdmin;
+    public User(String login, String password, boolean isAdmin) {
+        this.isAdmin = isAdmin;
+        this.login = login;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 
     public boolean isAdmin() {
         return isAdmin;
@@ -34,12 +52,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLogin(String userName) {
+        this.login = userName;
     }
 
     public String getPassword() {

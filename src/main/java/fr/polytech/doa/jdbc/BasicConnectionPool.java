@@ -19,6 +19,12 @@ public class BasicConnectionPool {
 
     public static void create(int port, String host, String base, String user, String password) throws SQLException {
 
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
         List<Connection> pool = new ArrayList<>(INITIAL_POOL_SIZE);
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
             pool.add(createConnection(getConnectionString(port, host, base), user, password));

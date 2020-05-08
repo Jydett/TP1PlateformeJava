@@ -10,17 +10,28 @@
 <html>
 <head>
     <title>Administrateur connecté</title>
+    <link rel="stylesheet" href="css/error.css">
 </head>
 <body>
+<h1>Tu es connecté administrateur!</h1>
+
+<c:if test="${not empty requestScope.error}">
+    <div class="error"> ${requestScope.error}</div>
+</c:if>
+
+<c:if test="${not empty requestScope.message}">
+    <div class="error message"> ${requestScope.message}</div>
+</c:if>
+
     <form method="post" style="display: inline-block;">
         <table>
             <c:forEach items="${requestScope.allNonAdmin}" var="nonAdmin">
                 <tr>
                     <td>
-                        ${nonAdmin.userName}
+                        ${nonAdmin.login}
                     </td>
                     <td>
-                        <input type="submit" formaction="userEdit?action=delete&id=${nonAdmin.id}" value="Supprimer cet utilisateur">
+                        <input type="submit" formaction="userRemove?id=${nonAdmin.id}" value="Supprimer cet utilisateur">
                     </td>
 
                 </tr>
@@ -34,3 +45,4 @@
 
 </body>
 </html>
+
