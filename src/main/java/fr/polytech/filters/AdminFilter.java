@@ -1,6 +1,7 @@
 package fr.polytech.filters;
 
 import fr.polytech.beans.User;
+import fr.polytech.utils.Constants;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,13 +14,14 @@ import java.io.IOException;
 
 @WebFilter(filterName = "connectedAdminFilter")
 public class AdminFilter extends HttpFilter {
+
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        Object connected = req.getSession().getAttribute("connected");
-        if (connected != null && connected instanceof User && ((User) connected).isAdmin()) {
+        Object connected = req.getSession().getAttribute(Constants.CONNECTED_ATTR_KEY);
+        if (connected instanceof User && ((User) connected).isAdmin()) {
             chain.doFilter(req, res);
         } else {
-            res.sendRedirect("connected.jsp");
+            res.sendRedirect(Constants.CONNECTED_REDIRECT_PATH);
         }
     }
 }

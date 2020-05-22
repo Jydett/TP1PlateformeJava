@@ -6,36 +6,39 @@ import java.util.List;
 
 public class LoginForm {
 
-    private String login;
-    private String password;
-    protected List<String> error;
+    public static final String LOGIN_PARAM_KEY = "login";
+    public static final String PASSWORD_PARAM_KEY = "password";
+
+    private final String login;
+    private final String password;
+    protected final List<String> errors;
 
     public LoginForm(HttpServletRequest req) {
-        this.login = req.getParameter("login");
-        this.password = req.getParameter("password");
-        this.error = new ArrayList<>();
+        this.login = req.getParameter(LOGIN_PARAM_KEY);
+        this.password = req.getParameter(PASSWORD_PARAM_KEY);
+        this.errors = new ArrayList<>();
         validateLogin();
         validatePassword();
     }
 
     protected void validateLogin() {
-        if(login == null) {
-            error.add("le login ne peut pas être vide");
+        if (login == null) {
+            errors.add("Le login ne peut pas être vide");
         }
     }
 
     protected void validatePassword() {
-        if(password == null) {
-            error.add("le mot de passe ne peut pas être vide");
+        if (password == null) {
+            errors.add("Le mot de passe ne peut pas être vide");
         }
     }
 
     public boolean formIsValid() {
-        return error.isEmpty();
+        return errors.isEmpty();
     }
 
-    public List<String> getError() {
-        return error;
+    public List<String> getErrors() {
+        return errors;
     }
 
     public String getLogin() {
@@ -45,6 +48,4 @@ public class LoginForm {
     public String getPassword() {
         return password;
     }
-
-
 }

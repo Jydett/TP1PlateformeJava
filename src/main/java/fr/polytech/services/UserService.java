@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
@@ -21,7 +21,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         try {
-            User user = userDao.findOneByID(id).orElseThrow(() -> new ServiceException("pas d'utilisateur avec cet id"));
+            User user = userDao.findOneByID(id).orElseThrow(() -> new ServiceException("Pas d'utilisateur avec cet id"));
             userDao.remove(user);
         } catch(SQLException e) {
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class UserService {
                 throw new ServiceException("Erreur d'authentification.");
             }
             return user;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new ServiceException("Erreur findUserByLogin()");
         }
@@ -57,6 +57,10 @@ public class UserService {
 
     public User createUser(SigInForm sigInForm) {
         try {
+            Optional<User> optionalUser = userDao.findUserByLogin(sigInForm.getLogin());
+            if (optionalUser.isPresent()) {
+                throw new ServiceException("Un utilisateur avec ce login existe déjà.");
+            }
             User user = new User(sigInForm.getLogin(), sigInForm.getPassword(), sigInForm.isAdmin());
             userDao.save(user);
             return user;

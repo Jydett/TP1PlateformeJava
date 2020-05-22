@@ -1,6 +1,8 @@
 package fr.polytech.beans;
 
 import fr.polytech.doa.Identifiable;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@Getter
+@Setter
 public class User implements Identifiable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +19,6 @@ public class User implements Identifiable<Long> {
     private String login;
     private String password;
     private boolean isAdmin;
-
 
     public User() {
     }
@@ -34,37 +37,5 @@ public class User implements Identifiable<Long> {
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
                 '}';
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String userName) {
-        this.login = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

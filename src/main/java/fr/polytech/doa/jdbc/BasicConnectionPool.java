@@ -11,50 +11,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasicConnectionPool {
 
-    private final List<Connection> connectionPool;
-    private List<Connection> usedConnections = new ArrayList<>();
+    private static final int INITIAL_POOL_SIZE = 10;
 
-    private static int INITIAL_POOL_SIZE = 10;
+    private final List<Connection> connectionPool;
     public static BasicConnectionPool INSTANCE;
 
-    public static void create(int port, String host, String base, String user, String password) throws SQLException {
-
+    public static void create(String jdbc_driver, String jdbc_url, String jdbc_login, String jdbc_password) throws SQLException {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(jdbc_driver);
         } catch (Exception ex) {
             ex.printStackTrace();
             System.exit(-1);
         }
         List<Connection> pool = new ArrayList<>(INITIAL_POOL_SIZE);
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            pool.add(createConnection(getConnectionString(port, host, base), user, password));
+            pool.add(createConnection(jdbc_url, jdbc_login, jdbc_password));
         }
         INSTANCE =  new BasicConnectionPool(pool);
     }
 
-    private static String getConnectionString(int port, String host, String base) {
-        return "jdbc:mysql://" + host + ":" + port + "/" + base + "?serverTimezone=UTC";
-    }
-
     public Connection getConnection() {
-        Connection connection = connectionPool
-                .remove(connectionPool.size() - 1);
-        usedConnections.add(connection);
-        return connection;
+        return connectionPool.remove(connectionPool.size() - 1);
     }
 
-    public boolean releaseConnection(Connection connection) {
+    public void releaseConnection(Connection connection) {
         connectionPool.add(connection);
-        return usedConnections.remove(connection);
     }
 
-    private static Connection createConnection(
-            String url, String user, String password)
-            throws SQLException {
+    private static Connection createConnection(String url, String user, String password) throws SQLException {
         return DriverManager.getConnection(url, user, password);
     }
 
-    public int getSize() {
-        return connectionPool.size() + usedConnections.size();
-    }
 }

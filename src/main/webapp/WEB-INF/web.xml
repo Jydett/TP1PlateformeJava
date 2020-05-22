@@ -22,7 +22,7 @@
 
   <context-param>
     <param-name>JDBC_URL</param-name>
-    <param-value>jdbc:mysql://localhost:3306/Cours_JEE_exemple1?serverTimezone=UTC</param-value>
+    <param-value>jdbc:mysql://localhost:3308/Cours_JEE_exemple1?serverTimezone=UTC</param-value>
   </context-param>
 
   <context-param>

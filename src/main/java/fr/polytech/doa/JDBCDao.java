@@ -22,8 +22,7 @@ public abstract class JDBCDao<I, T extends Identifiable<I>> {
 
     public JDBCDao(Class<T> clazz,
                        Function<ResultSet, T> resultSetTransformer,
-                       BiFunction<Connection, T,PreparedStatement> saveStatement
-                   ) {
+                       BiFunction<Connection, T,PreparedStatement> saveStatement) {
         tableName = clazz.getName().substring(clazz.getName().lastIndexOf('.'));
         this.resultSetTransformer = resultSetTransformer;
         this.saveStatement = saveStatement;

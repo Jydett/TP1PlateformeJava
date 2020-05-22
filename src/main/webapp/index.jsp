@@ -37,7 +37,7 @@
         <p style="text-align:center;">Mot de passe : <input required type="password" name="password" /></p>
         <c:if test="${inscription}">
             <p style="text-align:center;">Confirmer mot de passe : <input type="password" name="passwordConfirmation" /></p>
-            <p style="text-align:center;">Administrateur : <input type="checkbox" name="admin" /></p>
+            <p style="text-align:center;">Administrateur : <input type="checkbox" name="admin" value="true" /></p>
         </c:if>
 
         <c:choose>

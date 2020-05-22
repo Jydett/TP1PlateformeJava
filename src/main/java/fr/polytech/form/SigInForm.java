@@ -3,27 +3,33 @@ package fr.polytech.form;
 import javax.servlet.http.HttpServletRequest;
 
 public class SigInForm extends LoginForm {
+    public static final String ADMIN_PARAM_KEY = "admin";
+    public static final String PASSWORD_CONFIRMATION_PARAM_KEY = "passwordConfirmation";
+    public static final int MIN_LENGTH_PASSWORD = 8;
+    public static final int MAX_LENGTH_PASSWORD = 16;
+    public static final int MIN_LENGTH_LOGIN = 3;
+    public static final int MAX_LENGTH_LOGIN = 10;
+
     private boolean isAdmin;
-    private String isAdminStr;
-    private String validatePassowrd;
+    private final String isAdminStr;
+    private final String validatePassowrd;
 
     public SigInForm(HttpServletRequest req) {
         super(req);
-        this.isAdminStr = req.getParameter("admin");
-        this.validatePassowrd = req.getParameter("passwordConfirmation");
+        this.isAdminStr = req.getParameter(ADMIN_PARAM_KEY);
+        this.validatePassowrd = req.getParameter(PASSWORD_CONFIRMATION_PARAM_KEY);
         validateValidatePassword();
         validateIsAdmin();
-
     }
 
     protected void validatePassword() {
         String password = getPassword();
         if (password != null) {
-            if (password.length() < 8) {
-                error.add("le mot de passe doit contenir au moins 8 caractères");
+            if (password.length() < MIN_LENGTH_PASSWORD) {
+                errors.add("Le mot de passe doit contenir au moins 8 caractères");
             }
-            if (password.length() > 16) {
-                error.add("le mot de passe ne doit pas faire plus de 16 caractères");
+            if (password.length() > MAX_LENGTH_PASSWORD) {
+                errors.add("Le mot de passe ne doit pas faire plus de 16 caractères");
             }
         }
     }
@@ -31,21 +37,21 @@ public class SigInForm extends LoginForm {
     protected void validateLogin() {
         String login = getLogin();
         if (login != null) {
-            if (login.length() < 3) {
-                error.add("le login doit contenir au moins 3 caractères");
+            if (login.length() < MIN_LENGTH_LOGIN) {
+                errors.add("Le login doit contenir au moins 3 caractères");
             }
-            if (login.length() > 10) {
-                error.add("le login ne doit pas faire plus de 10 caractères");
+            if (login.length() > MAX_LENGTH_LOGIN) {
+                errors.add("Le login ne doit pas faire plus de 10 caractères");
             }
         }
     }
 
     private void validateValidatePassword() {
         if (this.validatePassowrd == null) {
-            error.add("merci de confirmer le mot de passe");
+            errors.add("Merci de confirmer le mot de passe");
         }
         else if (!this.validatePassowrd.equals(super.getPassword())) {
-            error.add("le mot de passe de confirmation n'est pas le même que le mot de passe");
+            errors.add("Le mot de passe de confirmation n'est pas le même que le mot de passe");
         }
     }
 
@@ -53,17 +59,11 @@ public class SigInForm extends LoginForm {
         try {
             this.isAdmin = Boolean.parseBoolean(isAdminStr);
         } catch (Exception e){
-            error.add("le paramètre isAdmin doit être un booléen");
+            errors.add("Le paramètre isAdmin doit être un booléen");
         }
-    }
-
-    public String getValidatePassowrd() {
-        return validatePassowrd;
     }
 
     public boolean isAdmin() {
         return isAdmin;
     }
-
-
 }

@@ -12,5 +12,4 @@ public interface UserDao {
     void remove(User user) throws SQLException;
     List<User> findNonAdmin() throws SQLException;
     Optional<User> findOneByID(Long id) throws SQLException;
-
 }
