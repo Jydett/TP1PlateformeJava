@@ -8,7 +8,7 @@ public class SigInForm extends LoginForm {
     public static final int MIN_LENGTH_PASSWORD = 8;
     public static final int MAX_LENGTH_PASSWORD = 16;
     public static final int MIN_LENGTH_LOGIN = 3;
-    public static final int MAX_LENGTH_LOGIN = 10;
+    public static final int MAX_LENGTH_LOGIN = 16;
 
     private boolean isAdmin;
     private final String isAdminStr;
@@ -41,7 +41,7 @@ public class SigInForm extends LoginForm {
                 errors.add("Le login doit contenir au moins 3 caractères");
             }
             if (login.length() > MAX_LENGTH_LOGIN) {
-                errors.add("Le login ne doit pas faire plus de 10 caractères");
+                errors.add("Le login ne doit pas faire plus de 16 caractères");
             }
         }
     }
