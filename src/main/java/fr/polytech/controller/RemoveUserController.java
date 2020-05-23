@@ -1,4 +1,4 @@
-package fr.polytech.servlets;
+package fr.polytech.controller;
 
 import fr.polytech.exceptions.ServiceException;
 import fr.polytech.initializer.ServletInitializer;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "RemoveUserServlet", urlPatterns = "/userRemove")
-public class RemoveUserServlet extends HttpServlet {
+public class RemoveUserController extends HttpServlet {
     public static final String MESSAGE_ATTR_KEY = "message";
     public static final String ID_PARAM_KEY = "id";
 

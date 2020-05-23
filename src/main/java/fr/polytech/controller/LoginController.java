@@ -1,4 +1,4 @@
-package fr.polytech.servlets;
+package fr.polytech.controller;
 
 import fr.polytech.beans.User;
 import fr.polytech.exceptions.ServiceException;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
-public class LoginServlet extends HttpServlet {
+public class LoginController extends HttpServlet {
     public static final String LOGIN_ERROR_ATTR_KEY = "loginError";
     public static final String INSCRIPTION_ATTR_KEY = "inscription";
     public static final String ADMIN_REDIRECTION_KEY = "admin";
